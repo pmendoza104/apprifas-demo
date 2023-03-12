@@ -23,6 +23,20 @@ router.get("/usuario/:nombreUsuario",(req,res)=>{
     .catch((error)=>res.send(error));
 })
 
+router.post("/usuario",(req,res)=>{
+    const nuevoUsuario = Usuario(req.body);
+
+       nuevoUsuario.save()
+        .then((data)=>{
+            console.log(data);
+            res.json(data);
+        })
+        .catch((error)=>{
+            console.error(error);
+            res.json(error);
+        })
+});
+
 router.put("/usuario/:nombreUsuario",async (req,res)=>{
     const { nombreUsuario }=req.params;
     nuevoUsuario = req.body;
