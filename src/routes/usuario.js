@@ -1,3 +1,4 @@
+const { json } = require("express");
 const express=require("express");
 const Usuarios=require("../models/Usuario");
 
@@ -19,6 +20,24 @@ router.get("/usuario/:nombreUsuario",(req,res)=>{
     .then((data)=>{
         res.json(data);
     })
+    .catch((error)=>res.send(error));
+})
+
+router.put("/usuario/:nombreUsuario",async (req,res)=>{
+    const { nombreUsuario }=req.params;
+    nuevoUsuario = req.body;
+
+    Usuarios.updateOne({nombreUsuario:nombreUsuario},
+        {$set: {nombreUsuario:nuevoUsuario.nombreUsuario}})
+    .then((data)=>{res.json(data)})
+    .catch((error)=>res.send(error));
+})
+
+router.delete("/usuario/:nombreUsuario",(req,res)=>{
+    const { nombreUsuario }=req.params;
+
+    Usuarios.deleteOne({nombreUsuario:nombreUsuario})
+    .then((data)=>res.json(data))
     .catch((error)=>res.send(error));
 })
 
